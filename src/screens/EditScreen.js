@@ -4,16 +4,22 @@ import {Context} from '../context/BlogCOntext';
 import BlogPostFrom from '../components/BlogPostForm';
 
 const EditScreen=(props)=>{
+    const ID = props.navigation.getParam('id');
+    const {state,editBlogPost}= useContext(Context);
 
-    const {state}= useContext(Context);
-    const blogPost = state.find((blogPost)=>blogPost.id === props.navigation.getParam('id'));
+    const blogPost = state.find((blogPost)=>blogPost.id === ID);
 
     const [title,setTitle]=useState(blogPost.title);
     const [content,setContent]=useState(blogPost.content);
 
     return(
         <View>
-            <BlogPostFrom/>
+            <BlogPostFrom
+            initialValues={{title:blogPost.title,content:blogPost.content}}
+            onSubmit={(title,content)=>{
+                editBlogPost(ID,title,content,()=>props.navigation.pop());//pop will retun to previous screen
+                
+            }}/>
         </View>
 
     )

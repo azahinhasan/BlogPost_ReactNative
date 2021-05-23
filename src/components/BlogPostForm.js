@@ -2,10 +2,10 @@ import React, { useContext,useState } from 'react';
 import { View,Text, StyleSheet, TextInput, Button,TouchableOpacity} from 'react-native';
 
 
-const BlogPostForm=({onSubmit})=>{
+const BlogPostForm=({onSubmit,initialValues})=>{
 
-    const [title,setTitle]=useState('');
-    const [content,setContent]=useState('');
+    const [title,setTitle]=useState(initialValues.title);
+    const [content,setContent]=useState(initialValues.content);
    // const {addBlogPost} = useContext(Context);
 
     return(
@@ -15,7 +15,7 @@ const BlogPostForm=({onSubmit})=>{
             <Text style={styles.lable}>Content:</Text>
             <TextInput style={styles.input} value={content} onChangeText={text=>setContent(text)}/>
         
-            <Button title="ADD BLOG"
+            <Button title="SAVE"
                 onPress={()=>onSubmit(title,content)}
 
                 // onPress={()=>{  //for calling 2 function or thing in one onPress
@@ -24,9 +24,20 @@ const BlogPostForm=({onSubmit})=>{
                 // }}
             />
         </View>
-    )
-}
+    );
+};
 
+
+BlogPostForm.defaultProps= {
+    //its setUP defult value to props 
+    //which help to avoid crash issue in here
+    initialValues: {
+        //there is no initialValues are comming from creatScreen
+        //thats why we assign deffult value in here
+        title:'',
+        content:'' 
+    }
+};
 
 const styles= StyleSheet.create({
     input:{
