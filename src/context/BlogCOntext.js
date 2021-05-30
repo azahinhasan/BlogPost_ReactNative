@@ -1,10 +1,14 @@
 import React,{useState,useReducer, createContext} from 'react';
 import createDataContext from './createDataContext';
+import jsonServer from '../api/jsonServer'
 
 
 const blogReducer= (state,action)=>{
     //console.log(state);
     switch(action.type){
+        case 'get_blogposts':
+           // console.log(action.payload,'response.data')
+            return action.payload;
         case 'add_blogpost':
             return[...state,{
                 id:Math.random()*9999,
@@ -23,6 +27,13 @@ const blogReducer= (state,action)=>{
     }
 };
 
+const getBlogPosts=dispatch=>{
+    return async ()=>{
+        const response = await jsonServer.get('/blogposts');
+        
+        dispatch ({type:'get_blogposts', payload:response.data});
+    }
+}
 
 const addBlogPost=(dispatch)=>{
         //setBlogPosts([...blogPosts,{title:`Blog Post :#${blogPosts.length+1}`}])
@@ -48,4 +59,4 @@ const editBlogPost=(dispatch)=>{
 };
 
 
-export const {Context,Provider}= createDataContext(blogReducer,{addBlogPost,deleteBlogPost,editBlogPost},[{title:'Test Post',content:'Test Content',id:1}]);
+export const {Context,Provider}= createDataContext(blogReducer,{addBlogPost,deleteBlogPost,editBlogPost,getBlogPosts},[]);
