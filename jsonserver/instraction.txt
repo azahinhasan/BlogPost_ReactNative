@@ -1,0 +1,14 @@
+->create a folder
+->npm init
+->npm install json-server ngrok
+->create a file db.json (in here we will store all datas)
+->in package.json
+	"scripts": {
+    		"db":"json-server -w db.json -p 3008",
+    		"tunnel":"ngrok http 3008"
+  	},
+
+
+->npm run db
+->npm run tunnel (from here use the link for HTTPS requsting)
+
